@@ -16,6 +16,7 @@ var numbers = [];
 var iter = 0;
 
 var game = new Phaser.Game(config);
+let pressed = false;
 
 function preload ()
 {
@@ -58,26 +59,21 @@ function create ()
     numbers.push(this.add.image(32 + 6 * 50, 742, 'atlas', '0'));
 
     blitter = this.add.blitter(0, 0, 'atlas');
-
-    for (var i = 0; i < 100; ++i)
-    {
-        launch();
-    }
-    
-    updateDigits();
 }
 
 function update ()
 {
-    if (this.input.activePointer.isDown)
+    if (this.input.activePointer.isDown && pressed === false)
     {
-        for (var i = 0; i < 250; ++i)
+        pressed = true;
+        for (var i = 0; i < 500; ++i)
         {
             launch();
         }
 
         updateDigits();
-    }
+    } else if (this.input.activePointer.isDown && pressed === true) pressed = true;
+    else pressed = false;
 
     for (var index = 0, length = blitter.children.list.length; index < length; ++index)
     {
